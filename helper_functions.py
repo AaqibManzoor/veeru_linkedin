@@ -219,12 +219,14 @@ def parse_html(filename):
         for p in people:
             total_people+=1
             name_box = p.find('span', {'class': ['name', 'actor-name']})
+#             here it checks while parsing csv that if name is not equal to " Linked Member" then parse follwing detail beacause LinkedIn members dont show any details
             if name_box:
                 name = name_box.text.strip()
                 if name != "LinkedIn Member":
                     non_linked_members+=1
                     names.append(name)
                     # extract remaining data
+#                     extracting location 
                     location = p.find(
                         attrs={'class': 'subline-level-2 t-12 t-black--light t-normal search-result__truncate'}
                     )
@@ -233,7 +235,7 @@ def parse_html(filename):
                     headline = p.find(attrs={'class': 'subline-level-1 t-14 t-black t-normal search-result__truncate'})
                     url = p.find(attrs={'data-control-name': 'search_srp_result'}).get('href')
                     headline = headline.text.strip()
-
+#                   extracting details of current  work 
                     if detail:
                         detail = detail.text.strip()
                         # if detail.split(':')[0].lower() == 'current':
